@@ -1,0 +1,4 @@
+REGISTERS (rax, 0)
+REGISTERS (rbx, 1)
+REGISTERS (rcx, 2)
+REGISTERS (rdx, 3)
