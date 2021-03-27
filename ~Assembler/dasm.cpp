@@ -47,7 +47,7 @@ int read(int** cmd, char** bin_file){
 }
 
 
-const char* func(int mode){
+const char* print_mode(int mode){
 	if(mode == 1){
 		return "push";
 	} else if(mode == 2){
@@ -80,13 +80,13 @@ void dasm(int* cmd, int cmd_size){
 		if(waitf_arg == 0){
 				
 			if(mode == -1){
-				fprintf(asm_f, "%s\n%s\n", func(*((char*)(cmd + i))), registers[cmd[i + 1]]);
+				fprintf(asm_f, "%s\n%s\n", print_mode(*((char*)(cmd + i))), registers[cmd[i + 1]]);
 			} else if(mode == -2){
-				fprintf(asm_f, "%s\n[%d]\n", func(*((char*)(cmd + i))), cmd[i + 1]);
+				fprintf(asm_f, "%s\n[%d]\n", print_mode(*((char*)(cmd + i))), cmd[i + 1]);
 			} else if(mode == -3){
-				fprintf(asm_f, "%s\n[%s]\n", func(*((char*)(cmd + i))), registers[cmd[i + 1]]);
+				fprintf(asm_f, "%s\n[%s]\n", print_mode(*((char*)(cmd + i))), registers[cmd[i + 1]]);
 			} else if(mode == -4){
-				fprintf(asm_f, "%s\n[%s +\n%d]\n", func(*((char*)(cmd + i))), registers[cmd[i + 1]], cmd[i + 2]);
+				fprintf(asm_f, "%s\n[%s +\n%d]\n", print_mode(*((char*)(cmd + i))), registers[cmd[i + 1]], cmd[i + 2]);
 				i++;
 			}
 			i++;
