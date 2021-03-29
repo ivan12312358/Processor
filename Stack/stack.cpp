@@ -166,11 +166,11 @@ void time(const char* mode){
 	
 	fprintf (file, "\n%s\n", asctime(timeinfo));
 
-	if((char*)mode == "w"){
+	if(!strcmp(mode, "w")){
 
 		fprintf(file, "Stack was created.\n\n");
 	
-	} else if((char*)mode == "a") {
+	} else if(!strcmp(mode, "a")) {
 
 		fprintf(file, "Stack was deleted.\n");	
 	}
