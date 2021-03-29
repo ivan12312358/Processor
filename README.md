@@ -1,5 +1,6 @@
 # Processor
 
-gcc sys.cpp -o sys
-
-./sys
+make all
+./asm ./Projects/"Project_name"
+./proc bin.out
+./dasm bin.out
