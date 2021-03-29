@@ -1,4 +1,3 @@
-#pragma once
 #include "../Libraries/stack.h"
 #line 4
 
@@ -167,11 +166,11 @@ void time(const char* mode){
 	
 	fprintf (file, "\n%s\n", asctime(timeinfo));
 
-	if(mode == "w"){
+	if((char*)mode == "w"){
 
 		fprintf(file, "Stack was created.\n\n");
 	
-	} else if(mode == "a") {
+	} else if((char*)mode == "a") {
 
 		fprintf(file, "Stack was deleted.\n");	
 	}

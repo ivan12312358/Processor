@@ -1,19 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include <string.h>
-
-typedef struct {
-	char elem[20];
-	int inx = 0;
-}labels;
-
-int compare(const void* elem_1, const void* elem_2);
-char* read(char** f_asm, int* str_cnt, int* sym_cnt);
-void split(char** string, char* symbols, int sym_cnt);
-void write(char** string, int sym_cnt);
-
+#include "../Libraries/asm.h"
 
 int main(int argc, char* argv[]){
 
@@ -51,6 +36,7 @@ char* read(char** f_asm, int* str_cnt, int* sym_cnt){
 	rewind(asm_file);
 	
 	char *symbols = (char*)calloc(*sym_cnt, sizeof(char));
+
 	fread(symbols, sizeof(char), *sym_cnt, asm_file);
 
 	for(int i = 0; i < *sym_cnt; i++){
@@ -84,6 +70,7 @@ void write(char** string, int str_cnt){
 	FILE* bin_file = fopen("bin.out", "w");
 
 	labels* lbl = (labels*)calloc(str_cnt, sizeof(labels));
+
 	int* cmds = (int*)calloc(str_cnt*2, sizeof(int));
 
 	int cnt = 0, lbl_inx = 0, lbl_cnt = 0;
@@ -95,13 +82,11 @@ void write(char** string, int str_cnt){
 		{
 			if(!strcmp(string[i], "\0") || !strcmp(string[i], "+")){
 				continue;
-			}
+			} else if(string[i][strlen(string[i]) - 1] == ':'){
 
-			if(string[i][strlen(string[i]) - 1] == ':'){
+				lbl[lbl_cnt].elem[0] = ':';
 
-					lbl[lbl_cnt].elem[0] = ':';
-
- 				for(int j = 1; j < strlen(string[i]); j++){
+ 				for(size_t j = 1; j < strlen(string[i]); j++){
 					lbl[lbl_cnt].elem[j] = string[i][j - 1];
  				}
 
@@ -156,21 +141,20 @@ void write(char** string, int str_cnt){
 											cmds[cnt++] = inx;									\
 										} else													\
 										
-			#include "../Libraries/regs.h"
+			REGISTERS (rax, 0)
+			REGISTERS (rbx, 1)
+			REGISTERS (rcx, 2)
+			REGISTERS (rdx, 3)
 			#undef REGISTERS
 
 			if(string[i][0] == '['){				
 				cmds[cnt++] = atoi(string[i] + 1);
-			} else {
-				if(strlen(string[i]) > 1){
+			} else if(strlen(string[i]) > 1){
 					cmds[cnt++] = atoi(string[i]);
-				} else {
-					if(string[i][0] < '0' || string[i][0] > '9'){
+			} else if(string[i][0] < '0' || string[i][0] > '9'){
 						cmds[cnt++] = string[i][0];
-					} else {
+			} else {
 						cmds[cnt++] = string[i][0] - '0';						
-					}
-				}
 			}
 		}
 	}

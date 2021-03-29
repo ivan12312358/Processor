@@ -4,7 +4,6 @@ push 0
 pop rax
 
 call :str
-call :clmn
 call :str
 
 print

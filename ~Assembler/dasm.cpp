@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-
-int read(int** cmd, char** bin_file);
-void dasm(int* cmd, int cmd_size);
-
+#include "../Libraries/dasm.h"
 
 int main(int argc, char* argv[]){
 
@@ -48,6 +41,7 @@ int read(int** cmd, char** bin_file){
 
 
 const char* print_mode(int mode){
+
 	if(mode == 1){
 		return "push";
 	} else if(mode == 2){
@@ -71,6 +65,7 @@ void dasm(int* cmd, int cmd_size){
 
 		#define COMMANDS(name, num, cmmds)	if(cmd[i] == num && waitf_arg == 0){		\
 												fprintf(asm_f, #name"\n");				\
+																						\
 												if(cmd[i] > 0 && cmd[i] < 11){			\
 													waitf_arg = 1;						\
 												}										\

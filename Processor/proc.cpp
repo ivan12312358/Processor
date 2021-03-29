@@ -1,15 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "../Stack/stack.cpp"
-#include <math.h>
+#include "../Libraries/proc.h"
+#include "../Libraries/stack.h"
 
-const int OPEN_ERR = 1;
-const int CMD_ERROR = 2;
-#define r_size 8192
-#define v_size 2048
-
-int* file(char** bin_file, int* cmd_pnt);
-int proc(int* cmd, int cmd_pnt);
 
 int main(int argc, char* argv[]){
 
@@ -27,6 +18,8 @@ int main(int argc, char* argv[]){
 int* file(char** bin_file, int* cmd_pnt){
 
 	FILE* f = fopen(*(bin_file), "rb");
+
+	assert(f);
 
 	fseek(f, 0, SEEK_END);
 	*cmd_pnt = ftell(f)/sizeof(int);
