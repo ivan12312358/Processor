@@ -13,6 +13,8 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 
+///This function reads from file///
+
 int read(int** cmd, char** bin_file){
 
 	FILE* bin_f = fopen(*bin_file, "rb");
@@ -50,6 +52,8 @@ const char* print_mode(int mode){
 
 	return "Wrong symbol";
 }
+
+///This function makes disassembling///
 
 void dasm(int* cmd, int cmd_size){
 

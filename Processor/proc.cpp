@@ -15,6 +15,8 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 
+///This function reads from file///
+
 int* file(char** bin_file, int* cmd_pnt){
 
 	FILE* f = fopen(*(bin_file), "rb");
@@ -31,6 +33,8 @@ int* file(char** bin_file, int* cmd_pnt){
 
 	return cmd;
 }
+
+///This function executes commands///
 
 int proc(int* cmd, int cmd_pnt){
 	

@@ -25,6 +25,8 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 
+///This function reads commands from file///
+
 char* read(char** f_asm, int* str_cnt, int* sym_cnt){
 
 	FILE* asm_file = fopen(*f_asm, "r+");
@@ -51,6 +53,7 @@ char* read(char** f_asm, int* str_cnt, int* sym_cnt){
 	return symbols;
 }
 
+///This function sblit symbols into strings///
 
 void split(char** string, char* symbols, int sym_cnt){
 
@@ -64,6 +67,7 @@ void split(char** string, char* symbols, int sym_cnt){
 	}
 }
 
+///This function assembles commands and write it in file///
 
 void write(char** string, int str_cnt){
 
@@ -74,6 +78,9 @@ void write(char** string, int str_cnt){
 	int* cmds = (int*)calloc(str_cnt*2, sizeof(int));
 
 	int cnt = 0, lbl_inx = 0, lbl_cnt = 0;
+
+
+	///Reading positions of labels///
 
 	for(int i = 0; i < str_cnt; i++){
 		#define COMMANDS(name, num, cmd) if(!strcmp(string[i], #name)) lbl_inx++; else
@@ -97,6 +104,8 @@ void write(char** string, int str_cnt){
 			}
 		}
 	}
+
+	///Assembling///
 
 	for(int i = 0; i < str_cnt; i++){
 		#define COMMANDS(name, num, cmd) if(!strcmp(string[i], #name)){    										\
