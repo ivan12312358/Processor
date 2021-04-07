@@ -1,10 +1,12 @@
 #include "../Libraries/asm.h"
+#include "../Libraries/Onegin.h"
+
 
 int main(int argc, char* argv[]){
 
 	int str_cnt = 0, sym_cnt = 0;
 
-	char* symbols = read(argv + 1, &str_cnt, &sym_cnt);
+	char* symbols = f_open(argv + 1, &sym_cnt, &str_cnt);
 
 	char **string = (char**)calloc(str_cnt, sizeof(char*));
 
@@ -26,32 +28,6 @@ int main(int argc, char* argv[]){
 }
 
 ///This function reads commands from file///
-
-char* read(char** f_asm, int* str_cnt, int* sym_cnt){
-
-	FILE* asm_file = fopen(*f_asm, "r+");
-
-	assert(asm_file);
-
-	fseek(asm_file, 0, SEEK_END);
-	*sym_cnt = ftell(asm_file);
-	rewind(asm_file);
-	
-	char *symbols = (char*)calloc(*sym_cnt, sizeof(char));
-
-	fread(symbols, sizeof(char), *sym_cnt, asm_file);
-
-	for(int i = 0; i < *sym_cnt; i++){
-		if(symbols[i] == ' ' ||  symbols[i] == '\n'){
-			symbols[i] = '\0';
-			(*str_cnt)++;
-		}
-	}
-
-	fclose(asm_file);
-
-	return symbols;
-}
 
 ///This function sblit symbols into strings///
 
