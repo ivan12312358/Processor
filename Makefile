@@ -22,4 +22,4 @@ stack.o: ./Stack/stack.cpp
 	$(CC) $(CFLAGS) -c ./Stack/stack.cpp
 
 clean:
-	rm -rf *.o myproject
+	rm -rf *.o asm dasm proc bin.out STACK_DUMP.log all

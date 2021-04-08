@@ -55,7 +55,6 @@ void write(char** string, int str_cnt){
 
 	int cnt = 0, lbl_inx = 0, lbl_cnt = 0;
 
-
 	///Reading positions of labels///
 
 	for(int i = 0; i < str_cnt; i++){
@@ -69,11 +68,11 @@ void write(char** string, int str_cnt){
 
 				lbl[lbl_cnt].elem[0] = ':';
 
- 				for(size_t j = 1; j < strlen(string[i]); j++){
+				for(size_t j = 1; j < strlen(string[i]); j++){
 					lbl[lbl_cnt].elem[j] = string[i][j - 1];
- 				}
+				}
 
- 				lbl[lbl_cnt++].inx = lbl_inx;
+				lbl[lbl_cnt++].inx = lbl_inx;
 			
 			} else {
 				lbl_inx++;
@@ -84,23 +83,23 @@ void write(char** string, int str_cnt){
 	///Assembling///
 
 	for(int i = 0; i < str_cnt; i++){
-		#define COMMANDS(name, num, cmd) if(!strcmp(string[i], #name)){    										\
-										 	*((char*)(cmds + cnt)) = num;										\
-											cnt++;																\
+		#define COMMANDS(name, num, cmd) if(!strcmp(string[i], #name)){    		\
+										 	*((char*)(cmds + cnt)) = num;		\
+											cnt++;								\
 										 } else 
 		#include "../Libraries/commands.h"
 		#undef COMMANDS
 		{
 			
 			cnt--;
-	 	 	if(string[i][0] == '['){
-	 	 		if(string[i][1] == 'r'){
-	 	 			if(i < str_cnt - 1 && string[i + 1][0] == '+'){
+			if(string[i][0] == '['){
+				if(string[i][1] == 'r'){
+					if(i < str_cnt - 1 && string[i + 1][0] == '+'){
 						*((char*)(cmds + cnt) + 1) = -4;
-	 	 			} else {
+					} else {
 						*((char*)(cmds + cnt) + 1) = -3;
 	 	 			}
-	 	 		} else {
+		 		} else {
 	 	 			*((char*)(cmds + cnt) + 1) = -2;
 	 	 		}
 			} else if(string[i][0] == 'r' && string[i][2] == 'x'){
@@ -135,20 +134,22 @@ void write(char** string, int str_cnt){
 			if(string[i][0] == '['){				
 				cmds[cnt++] = atoi(string[i] + 1);
 			} else if(strlen(string[i]) > 1){
-					cmds[cnt++] = atoi(string[i]);
+				cmds[cnt++] = atoi(string[i]);
 			} else if(string[i][0] < '0' || string[i][0] > '9'){
-						cmds[cnt++] = string[i][0];
+				cmds[cnt++] = string[i][0];
 			} else {
-						cmds[cnt++] = string[i][0] - '0';						
+				cmds[cnt++] = string[i][0] - '0';						
 			}
 		}
 	}
 
-/*
+
 	for(int j = 0; j < cnt; j++){
-			printf("%d\n", cmds[j]);
+		for(int k = 0; k < 4; k++)
+			printf("%d", *((char*)(cmds + j) + k));
+		printf("\n");
 	}
-*/
+
 	
 	fwrite(cmds, sizeof(int), cnt, bin_file);
 

@@ -47,6 +47,7 @@ int proc(int* cmd, int cmd_pnt){
 	int tmp = 0, mode = 0;
 
 	for(int i = 0; i < stack.capacity; i++){
+	//	printf("%d\n", registers[3]);
 		stack_dump(&stack);
 		#define COMMANDS(name, num, cmds) if(*(char*)(cmd + i) == num){			\
 											mode = *((char*)(cmd + i) + 1);		\

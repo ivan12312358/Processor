@@ -1,11 +1,40 @@
 in
 pop rax
-push rax
-push rax
-push 1
-jb :f1
-push 1
+call :fact
+push rcx
 out
 end
-f1:
-end
+
+fact:
+
+    push rax
+    push 1
+    push rax
+    sub
+
+    pop rax
+    push rax
+    push 1
+
+    ja :L1
+        call :fact
+    L1:
+
+
+    pop rax
+    pop rcx
+    
+    pop rdx
+    push rdx
+    push rbx
+    je :L2
+
+        push rdx
+        push rax
+        mul
+        push rcx
+
+    L2:
+
+    ret
+    
