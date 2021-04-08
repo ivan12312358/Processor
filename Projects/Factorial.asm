@@ -1,11 +1,22 @@
 in
 pop rax
-call :fact
-push rcx
-out
+
+push rax
+push 1
+
+jb :L3
+    push 1
+    out
+    end
+L3:
+
+push rax
+pop rbx
+
+call :factorial
 end
 
-fact:
+factorial:
 
     push rax
     push 1
@@ -17,24 +28,29 @@ fact:
     push 1
 
     ja :L1
-        call :fact
+        call :factorial
     L1:
 
 
     pop rax
     pop rcx
-    
+
     pop rdx
     push rdx
     push rbx
-    je :L2
 
-        push rdx
+    jne :L2    
         push rax
+        push rdx
         mul
-        push rcx
-
+        out
+        ret
     L2:
 
+    push rdx
+    push rax
+    mul
+    push rcx
+
+
     ret
-    
