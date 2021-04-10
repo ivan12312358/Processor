@@ -102,9 +102,9 @@ void assemble(char** string, int str_cnt){
 
 	for(int i = 0; i < str_cnt; i++){
 		#define COMMANDS(name, num, cmd) if(!strcmp(string[i], #name)){    		\
-										 	*((char*)(cmds + cnt)) = num;		\
-											cnt++;								\
-										 } else 
+							*((char*)(cmds + cnt)) = num;		\
+							cnt++;					\
+						 } else 
 		#include "../Libraries/commands.h"
 		#undef COMMANDS
 		{
@@ -139,9 +139,9 @@ void assemble(char** string, int str_cnt){
 			} else 
 
 			#define REGISTERS(reg, inx) if(!strncmp(string[i] + 1, #reg, sizeof(#reg) - 1)		\
-																|| !strcmp(string[i], #reg)){	\
-											cmds[cnt++] = inx;									\
-										} else													\
+										|| !strcmp(string[i], #reg)){	\
+						    	cmds[cnt++] = inx;					\
+						    } else							\
 										
 			REGISTERS (rax, 0)
 			REGISTERS (rbx, 1)
