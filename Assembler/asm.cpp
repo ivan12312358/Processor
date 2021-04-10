@@ -14,12 +14,16 @@ int main(int argc, char* argv[]){
 
 /*
 	for(int i = 0; i < str_cnt; i++){
+		
+		if(!strcmp(string[i], "\0")){
+			continue;
+		}
+
 		printf("%d\t%s\n", i + 1, string[i]);
 	}
-
-	printf("\n\n\n");
 */
-	write(string, str_cnt);
+
+	assemble(string, str_cnt);
 
 	free(symbols);
 	free(string);
@@ -27,35 +31,32 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 
-///This function reads commands from file///
 
 ///This function sblit symbols into strings///
 
 void split(char** string, char* symbols, int sym_cnt){
 
-	int len_str = 0, j = 0;
+	int str_cnt = 0;
+	char* endf_str = NULL;
 
-	for(int i = 0; i < sym_cnt; i++){
-		if(symbols[i] == '\0'){
-			string[j++] = symbols + len_str;
-			len_str = i + 1;
-		}
+	string[str_cnt++] = symbols;
+
+	for(int i = 0; i < sym_cnt; ){
+
+		endf_str = strchr(symbols + i, '\0');
+		i += strlen(symbols + i) + 1;
+
+		if(i < sym_cnt){
+			string[str_cnt++] = endf_str + 1;
+		} else break;
 	}
 }
 
-///This function assembles commands and write it in file///
+///Reading positions of labels///
 
-void write(char** string, int str_cnt){
+int lbl_pos(int str_cnt, labels* lbl, char** string){
 
-	FILE* bin_file = fopen("bin.out", "w");
-
-	labels* lbl = (labels*)calloc(str_cnt, sizeof(labels));
-
-	int* cmds = (int*)calloc(str_cnt*2, sizeof(int));
-
-	int cnt = 0, lbl_inx = 0, lbl_cnt = 0;
-
-	///Reading positions of labels///
+	int lbl_inx = 0, lbl_cnt = 0;
 
 	for(int i = 0; i < str_cnt; i++){
 		#define COMMANDS(name, num, cmd) if(!strcmp(string[i], #name)) lbl_inx++; else
@@ -79,6 +80,23 @@ void write(char** string, int str_cnt){
 			}
 		}
 	}
+
+	return lbl_cnt;
+}
+
+///This function assembles commands and write it in file///
+
+void assemble(char** string, int str_cnt){
+
+	FILE* bin_file = fopen("bin.out", "w");
+
+	labels* lbl = (labels*)calloc(str_cnt, sizeof(labels));
+
+	int* cmds = (int*)calloc(str_cnt*2, sizeof(int));
+
+	int cnt = 0, lbl_cnt = 0;
+
+	lbl_cnt = lbl_pos(str_cnt, lbl, string);
 
 	///Assembling///
 
@@ -142,14 +160,6 @@ void write(char** string, int str_cnt){
 			}
 		}
 	}
-
-
-	for(int j = 0; j < cnt; j++){
-		for(int k = 0; k < 4; k++)
-			printf("%d", *((char*)(cmds + j) + k));
-		printf("\n");
-	}
-
 	
 	fwrite(cmds, sizeof(int), cnt, bin_file);
 

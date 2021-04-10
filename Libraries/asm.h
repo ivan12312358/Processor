@@ -15,4 +15,6 @@ char* read(char** f_asm, int* str_cnt, int* sym_cnt);
 
 void split(char** string, char* symbols, int sym_cnt);
 
-void write(char** string, int sym_cnt);
+int lbl_pos(int str_cnt, labels* lbl, char** string);
+
+void assemble(char** string, int sym_cnt);
