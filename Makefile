@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -g -Wall -O3
+CC = g++
+CFLAGS = -Wall -O3
 
 all: myproject
 

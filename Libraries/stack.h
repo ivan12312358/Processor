@@ -3,16 +3,50 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <assert.h>
 
-typedef struct{
-	long long chop1;
-	long long status;
-	int capacity;
-	int size;
-	int* elem;
-	long long hash_summ;
-	long long chop2;
-}Stack;
+class Stack {
+
+	private:
+
+		long long chop1_;
+		int capacity_;
+		int size_;
+		int* elem_;
+		long long hash_summ_;
+		long long chop2_;
+
+	public:
+	
+	////The function create stack////
+		Stack();
+		Stack(int size);
+	////The function destruct stack////
+		~Stack();
+	////The function checks the stack data////
+		int verification();
+	////The function prints stack data and errors////
+		void dump();
+	////The function change stack capacity////
+		void cap_change();
+	////The function puts an element on the stack////
+		void push(int elem);
+	////The function returns an element from the stack////
+		int pop();
+	////The function prohibits to copy stack////
+		Stack(const Stack& stk) = delete;
+	////The function prohibits to use operator = to constant stack////
+		const Stack& operator= (const Stack* stk) = delete;
+	////The function allows to use [] to stack////
+		const int& operator[](int number) const;
+			  int& operator[](int number);
+	////The function returns stack capacity////
+		int get_cap();
+};
+
+
+///The function prints time in dump file////
+void time(const char* mode);
 
 enum error {
 	stack_ok,
@@ -26,28 +60,3 @@ enum error {
 	w_value_canary2,
 	w_val_hsh_sm
 };
-
-
-////The function create stack////
-void constructor(Stack* stack, int SIZE);
-
-////The function checks the stack data////
-int verification(Stack* stack);
-
-////The function prints stack data and errors////
-void stack_dump(Stack* stack);
-
-////The function change stack capacity////
-void cap_change(Stack* stack);
-
-////The function puts an element on the stack////
-void push(Stack* stack, int elem);
-
-////The function returns an element from the stack////
-int pop(Stack* stack);
-
-////The function destruct stack data////
-void destructor(Stack* stack);
-
-///The function prints time in dump file////
-void time(const char* mode);

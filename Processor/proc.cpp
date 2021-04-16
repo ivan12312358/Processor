@@ -38,30 +38,25 @@ int* file(char** bin_file, int* cmd_pnt){
 
 int proc(int* cmd, int cmd_pnt){
 	
-	Stack stack;
-	constructor(&stack, cmd_pnt);
+	Stack stack(cmd_pnt);
 
 	int registers[4] = {};
 	int ram[r_size] = {};
 
 	int tmp = 0, mode = 0;
 
-	for(int i = 0; i < stack.capacity; i++){
-	//	printf("%d\n", registers[3]);
-		stack_dump(&stack);
-		#define COMMANDS(name, num, cmds) if(*(char*)(cmd + i) == num){			\
-											mode = *((char*)(cmd + i) + 1);		\
-											cmds 								\
+	for(int start = 0, end = stack.get_cap(); start < end; start++){
+		stack.dump();
+		#define COMMANDS(name, num, cmds) if(*(char*)(cmd + start) == num){			\
+											mode = *((char*)(cmd + start) + 1);		\
+											cmds 									\
 										  } else 								
 		#include "../Libraries/commands.h"
 		{
 			printf("Unexpected case\n");
 		}
-		stack_dump(&stack);
+		stack.dump();
 	}
-
-
-	destructor(&stack);
 
 	return 0;
 }

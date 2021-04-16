@@ -4,116 +4,116 @@ COMMANDS (end,   0, {
 
 COMMANDS (push,  1, {
 						if(mode == 0){
-							push(&stack, cmd[++i]);
+							stack.push(cmd[++start]);
 						} else if(mode == -1){
-							push(&stack, registers[cmd[++i]]);	
+							stack.push(registers[cmd[++start]]);	
 						} else if(mode == -2){
-							push(&stack, ram[cmd[++i]]);
+							stack.push(ram[cmd[++start]]);
 						} else if(mode == -3){
-							push(&stack, ram[registers[cmd[++i]]]);
+							stack.push(ram[registers[cmd[++start]]]);
 						} else if(mode == -4){
-							push(&stack, ram[registers[cmd[i + 1]] + cmd[i + 2]]);
-							i += 2;
+							stack.push(ram[registers[cmd[start + 1]] + cmd[start + 2]]);
+							start += 2;
 						}
 					})
 
 COMMANDS (pop,   2, {
 						if(mode == 0){
-							pop(&stack);
+							stack.pop();
 						} else if(mode == -1){
-							registers[cmd[++i]] = pop(&stack);
+							registers[cmd[++start]] = stack.pop();
 						} else if(mode == -2){
-							ram[cmd[++i]] = pop(&stack);
+							ram[cmd[++start]] = stack.pop();
 						} else if(mode == -3){
-							ram[registers[cmd[++i]]] = pop(&stack);
+							ram[registers[cmd[++start]]] = stack.pop();
 						} else if(mode == -4){
-							ram[registers[cmd[i + 1]] + cmd[i + 2]] = pop(&stack);
-							i += 2;
+							ram[registers[cmd[start + 1]] + cmd[start + 2]] = stack.pop();
+							start += 2;
 						}
 					})
 
 COMMANDS (jmp,   3, {
-						i = cmd[i + 1] - 1;
+						start = cmd[start + 1] - 1;
 					})
 
 COMMANDS (jb,    4, {
-						if(pop(&stack) < pop(&stack))
-							i = cmd[i + 1] - 1;
-						else i++;
+						if(stack.pop() < stack.pop())
+							start = cmd[start + 1] - 1;
+						else start++;
 					})
 
 COMMANDS (jbe, 	 5, {
-						if(pop(&stack) <= pop(&stack))
-							i = cmd[i + 1] - 1;
-						else i++;
+						if(stack.pop() <= stack.pop())
+							start = cmd[start + 1] - 1;
+						else start++;
 					})
 
 COMMANDS (ja, 	 6, {				
-						if(pop(&stack) > pop(&stack))
-							i = cmd[i + 1] - 1;
-						else i++;
+						if(stack.pop() > stack.pop())
+							start = cmd[start + 1] - 1;
+						else start++;
 					})
 
 COMMANDS (jae,   7, {
-						if(pop(&stack) >= pop(&stack))
-							i = cmd[i + 1] - 1;
-						else i++;
+						if(stack.pop() >= stack.pop())
+							start = cmd[start + 1] - 1;
+						else start++;
 					})
 
 COMMANDS (je,    8, {
-						if(pop(&stack) == pop(&stack))
-							i = cmd[i + 1] - 1;				
-						else i++;
+						if(stack.pop() == stack.pop())
+							start = cmd[start + 1] - 1;				
+						else start++;
 					})
 
 COMMANDS (jne,   9, {
-						if(pop(&stack) != pop(&stack))
-							i = cmd[i + 1] - 1;
-						else i++;
+						if(stack.pop() != stack.pop())
+							start = cmd[start + 1] - 1;
+						else start++;
 						})
 
 COMMANDS (call,  10,{
-						push(&stack, i + 2);
-						i = cmd[i + 1] - 1;
+						stack.push(start + 2);
+						start = cmd[start + 1] - 1;
 					})
 
 
 COMMANDS (add,   11,{
-						push(&stack, pop(&stack) + pop(&stack));
+						stack.push(stack.pop() + stack.pop());
 					})
 
 COMMANDS (sub,   12,{
-						push(&stack, pop(&stack) - pop(&stack));
+						stack.push(stack.pop() - stack.pop());
 					})
 
 COMMANDS (div,   13,{
-						push(&stack, pop(&stack) / pop(&stack));
+						stack.push(stack.pop() / stack.pop());
 					})
 
 COMMANDS (mul, 	 14,{
-						push(&stack, pop(&stack) * pop(&stack));
+						stack.push(stack.pop() * stack.pop());
 					})
 
 COMMANDS (fsqrt, 15,{
-						push(&stack, sqrt(pop(&stack)));
+						stack.push(sqrt(stack.pop()));
 					})
 
 COMMANDS (in,    16,{
 						scanf("%d", &tmp);
-						push(&stack, tmp);
+						stack.push(tmp);
 					})
 
 
 COMMANDS (ret,   17,{
-						i  = pop(&stack) - 1;
+						start  = stack.pop() - 1;
 					})
 
 COMMANDS (out,   18,{
-						printf("%d\n", pop(&stack));
+						printf("%d\n", stack.pop());
 					})
 
 COMMANDS (print, 19,{
-						for(int i = r_size - v_size; i < r_size; i++){
-							printf("%c", ram[i]);
+						for(int start = r_size - v_size; start < r_size; start++){
+							printf("%c", ram[start]);
 						}
-					  })
+					})
