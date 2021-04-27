@@ -7,6 +7,7 @@ myproject: proc.o stack.o asm.o dasm.o
 	$(CC) $(CFLAGS) proc.o stack.o -o proc -lm		
 	$(CC) $(CFLAGS) asm.o Onegin.o -o asm					
 	$(CC) $(CFLAGS)	dasm.o -o dasm
+	rm -rf *.o
 
 asm.o: ./Assembler/asm.cpp
 	$(CC) $(CFLAGS) -c	./Assembler/asm.cpp
@@ -22,4 +23,4 @@ stack.o: ./Stack/stack.cpp
 	$(CC) $(CFLAGS) -c ./Stack/stack.cpp
 
 clean:
-	rm -rf *.o asm dasm proc bin.out STACK_DUMP.log all
+	rm -rf asm dasm proc bin.out STACK_DUMP.log

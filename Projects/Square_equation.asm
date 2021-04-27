@@ -1,3 +1,7 @@
+push 6144
+pop  rdx
+
+call :coeff
 call :scanf
 call :a_eq_zero
 
@@ -229,4 +233,46 @@ c_eq_zero:
 
     l5:
     ret
+coefficients
+coeff:
 
+    push _
+    push s
+    push t
+    push n
+    push e
+    push i
+    push с
+    push i
+    push f
+    push f
+    push e
+    push o
+    push c
+    push _
+    push r
+    push e
+    push t
+    push n
+    push E
+
+    push 19
+    pop  rcx
+
+    Loop:
+        pop [rdx]
+        push 1
+        push rdx
+        add
+        pop rdx
+        push 1
+        push rcx
+        sub
+        pop  rcx
+        push rcx
+        push 0
+        jb :Loop
+
+    print
+
+    ret

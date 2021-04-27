@@ -1,3 +1,8 @@
+push 6144
+pop  rdx
+
+call :printf
+
 in
 pop rax
 
@@ -52,5 +57,42 @@ factorial:
     mul
     push rcx
 
+
+    ret
+
+printf:
+
+    push _
+    push r
+    push e
+    push b
+    push m
+    push u
+    push n
+    push _
+    push r
+    push e
+    push t
+    push n
+    push E
+
+    push 13
+    pop  rcx
+
+    L4:
+        pop [rdx]
+        push 1
+        push rdx
+        add
+        pop rdx
+        push 1
+        push rcx
+        sub
+        pop  rcx
+        push rcx
+        push 0
+        jb :L4
+
+    print
 
     ret
